@@ -19,7 +19,8 @@ class Queue {
       return false;
     }
   }
-
+  /*Still have to ask about this one. If i write it like this to behave as the exercise explanation diagram
+  and the demo provided, it throws an error. The tests only pass if I make it behave like the stack iterations.*/
   enqueue(item) {
     if(this.canEnqueue()){
       this.queueControl.unshift(item);
