@@ -11,36 +11,65 @@ const takeStackBtn = document.getElementById('take-stack');
 const newStack = new Stack();
 
 const clearStackInput = () => {
-  // ... your code goes here
+  stackInput.value = "";
 };
 
 const renderListStack = () => {
-  // ... your code goes here
+// Clears the previous representation of the stacklist so the new updated one can be drawn
+  stackList.innerHTML = "";
+
+  /* We will iterate the number of times as the max size of the stack (in this case, 10 times).
+  For each iteration, we will check if the stack array (newStack.display) has any element on that specific index.
+  If it has, with the string being either empty or not, we will draw an active line.
+  For each index the stack has no value, we print an inactive line.*/
+  for (let i = 0; i < newStack.MAX_SIZE; i++){
+    let li = document.createElement('li');
+    if(newStack.display()[i] || newStack.display()[i] === ''){
+      li.className = 'active';
+      li.innerText = newStack.display()[i];
+      stackList.appendChild(li); 
+    } else {
+      li.className = 'inactive';
+      stackList.appendChild(li);
+    }
+  }
 };
 
-renderListStack();
+
 
 const generateWarningStack = (type) => {
   if (type === 'underflow') {
-    // ... your code goes here
+        // If we have an underflow, we will first make sure the warning div will be visible 
+    warningBottomStack.style.display = 'block';
+    // Then we insert the underflow text inside the div
+    warningBottomStack.innerText = type;
   } else if (type === 'overflow') {
-    // ... your code goes here
+    // If we have an overflow, we will first make sure the warning div will be visible 
+    warningTopStack.style.display = 'block';
+    // Then we insert the overflow text inside the div
+    warningTopStack.innerText = type;
   }
 };
 
 const addToStack = () => {
   try {
-    // ... your code goes here
+    /* When the button is clicked, the value from the form is inserted inside the
+    stack array using its specific push method coded on the other file. */
+    newStack.push(stackInput.value);
+    clearStackInput();
+    renderListStack();
   } catch (error) {
-    // there was an overflow error, handle it
+    generateWarningStack('overflow');
   }
 };
 
 const removeFromStack = () => {
   try {
-    // ... your code goes here
+    // Clicking the remove button calls the pop method from newStack. Then we re-draw the list with the updated stack
+    newStack.pop();
+    renderListStack();
   } catch (error) {
-    // there was an underflow error, handle it
+    generateWarningStack('underflow');
   }
 };
 
